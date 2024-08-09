@@ -1,19 +1,24 @@
 import asyncio
 import logging
+import os
 
-from aiogram import Bot, Dispatcher
+from aiogram import Bot, Dispatcher, types
+from dotenv import find_dotenv, load_dotenv # type: ignore
+from common.bot_cmds_list import private
+
+load_dotenv(find_dotenv())
+
 from handlers import user_open
 
 
-BOT_TOKEN = "6942331878:AAEwewxE1_ZhQn0secJYnQHtE_-rKqYSTIs"
-
-
-
 async def main():
-    bot = Bot(BOT_TOKEN)
+    bot = Bot(token=os.getenv('TOKEN'))
     dp = Dispatcher()
+    # Routers
     dp.include_router(user_open.user_opened)
+    
     await bot.delete_webhook(drop_pending_updates=True)
+    await bot.set_my_commands(commands=private, scope=types.BotCommandScopeAllPrivateChats())
     await dp.start_polling(bot)
 
 

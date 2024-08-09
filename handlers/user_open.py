@@ -1,6 +1,6 @@
 from aiogram import Bot, Dispatcher, Router, F
 from aiogram.types import Message, ReplyKeyboardRemove
-from aiogram.filters import Command, CommandStart
+from aiogram.filters import Command, CommandStart, or_f
 import keyboards.kb as kb
 from utils import text
 
@@ -12,23 +12,24 @@ async def start(message: Message):
     await message.answer('Hello user!!!!!!!!', reply_markup=kb.main_kb)
 
 
-@user_opened.message(F.text.lower() == '📝сделать заказ!')
-async def answer_yes(message: Message):
+@user_opened.message(or_f(Command('create'), F.text.lower() == '📝сделать заказ!'))
+async def create_list(message: Message):
     await message.answer(
         'Заполните анкету!',
         reply_markup=kb.main_kb
     )
 
-@user_opened.message(F.text.lower() == '📖 о нас')
-async def answer_yes(message: Message):
+
+@user_opened.message(or_f(Command('about'), F.text.lower() == '📖 о нас'))
+async def about_me(message: Message):
     await message.answer(
         text.text_about,
         reply_markup=kb.main_kb
     )
 
 
-@user_opened.message(F.text.lower() == '⚙️техподдержка')
-async def answer_yes(message: Message):
+@user_opened.message(or_f(Command('settings'), F.text.lower() == '⚙️техподдержка'))
+async def settings(message: Message):
     await message.answer(
         'По всем вопросам обращаться @makootooo!',
         reply_markup=kb.main_kb

@@ -15,5 +15,7 @@ main_kb = ReplyKeyboardMarkup(
             KeyboardButton(text='⚙️Техподдержка')
         ]
 
-    ]
+    ],
+    resize_keyboard=True,
+    input_field_placeholder='Сделайте выбор!'
 )
