@@ -9,14 +9,19 @@ from common.bot_cmds_list import private
 load_dotenv(find_dotenv())
 
 from handlers import user_open
+from handlers import user_group
+from handlers import admin_private
+
+bot = Bot(token=os.getenv('TOKEN'))
+bot.my_admins_list = []
+
+dp = Dispatcher()
+dp.include_router(user_open.user_opened)
+dp.include_router(user_group.user_group_router)
+dp.include_router(admin_private.admin_router)
 
 
 async def main():
-    bot = Bot(token=os.getenv('TOKEN'))
-    dp = Dispatcher()
-    # Routers
-    dp.include_router(user_open.user_opened)
-    
     await bot.delete_webhook(drop_pending_updates=True)
     await bot.set_my_commands(commands=private, scope=types.BotCommandScopeAllPrivateChats())
     await dp.start_polling(bot)

@@ -3,6 +3,7 @@ from aiogram.types import Message, ReplyKeyboardRemove
 from aiogram.filters import Command, CommandStart, or_f
 import keyboards.kb as kb
 from utils import text
+from keyboards.kb import del_kb
 
 
 user_opened = Router()
