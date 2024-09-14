@@ -5,7 +5,7 @@ import os
 from aiogram import Bot, Dispatcher, types
 from dotenv import find_dotenv, load_dotenv # type: ignore
 from common.bot_cmds_list import private
-from database.models import async_main
+# from database.models import async_main
 
 load_dotenv(find_dotenv())
 
